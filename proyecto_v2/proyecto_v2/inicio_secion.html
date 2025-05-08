@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/96bfb7a651.js" crossorigin="anonymous"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Inicio de Sesión</title>
+</head>
+<body>
+    <div class="contenedor-login ">
+        <header class="login-header-aventura">
+            <img src="logo.png" alt="FaunaView Logo" class="logo-login-aventura">
+            <h3>📜 Acceso al Gremio de Exploradores 📜</h3>
+            <p>Ingresa tus credenciales o únete a nuestras filas para comenzar tu leyenda.</p>
+        </header>
+
+        <div class="formularios-login">
+            <div class="formulario sign-in">
+                <form id="login-form" action="">
+                    <h2> Iniciar sesion</h2>
+                    <div class="input-contenedor" >
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="login-email" required>
+                        <label for="login-email">Email</label>
+                    </div>
+                    
+                    <div class="input-contenedor" >
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="login-password" required>
+                        <label for="login-password">Contraseña</label>
+                    </div>
+
+                    <div class="olvidar">
+                        <label>
+                            <input type="checkbox" id="login-remember"> Recordar
+                            <a href="#">olvide la contraseña</a>
+                        </label>
+                    </div>
+                    <button type="submit">Acceder</button>
+                    <p id="login-message" style="color: var(--adventure-primary); margin-top: 10px; text-align: center; font-weight: bold;"></p>
+                    <div class="signUp-link">
+                        <p>No tienes cuenta? <a href="#" class="signUpBtn-link">Crear una</a></p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="formulario sign-up">
+                <form id="register-form" action="">
+                    <h2> Crear cuenta</h2>
+                    <div class="input-contenedor" >
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="register-username" required>
+                        <label for="register-username">Nombre de usuario</label>
+                    </div>
+                    <div class="input-contenedor" >
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="register-email" required>
+                        <label for="register-email">Email</label>
+                    </div>
+                    
+                    <div class="input-contenedor" >
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="register-password" required>
+                        <label for="register-password">Contraseña</label>
+                    </div>
+
+                    <div class="olvidar">
+                        <label>
+                            <input type="checkbox" id="register-terms" required> estoy de acuerdo con los terminos y condiciones.
+                        </label>
+                    </div>
+                    <div>
+                        <button type="submit">Crear cuenta</button>
+                        <p id="register-message" style="color: var(--adventure-primary); margin-top: 10px; text-align: center; font-weight: bold;"></p>
+                        <div class="signUp-link">
+                            <p>Ya tienes cuenta? <a href="#" class="signInBtn-link">Iniciar sesion</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div style="text-align: center; width: 100%; margin-top: 30px;">
+            <a href="index.html" class="btn-aventura-index" style="padding: 12px 25px; font-size: 18px; display: inline-block;">🏠 Volver al Inicio</a>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const loginMessage = document.getElementById('login-message');
+            const registerMessage = document.getElementById('register-message');
+
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    registerMessage.textContent = '';
+
+                    const username = document.getElementById('register-username').value.trim();
+                    const email = document.getElementById('register-email').value.trim();
+                    const password = document.getElementById('register-password').value;
+                    const terms = document.getElementById('register-terms').checked;
+
+                    if (!username || !email || !password) {
+                        registerMessage.textContent = 'Todos los campos son obligatorios.';
+                        registerMessage.style.color = '#b32d2d';
+                        return;
+                    }
+                    if (!terms) {
+                        registerMessage.textContent = 'Debes aceptar los términos y condiciones.';
+                        registerMessage.style.color = '#b32d2d';
+                        return;
+                    }
+                    if (password.length < 6) {
+                         registerMessage.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+                         registerMessage.style.color = '#b32d2d';
+                         return;
+                    }
+
+                    let users = JSON.parse(localStorage.getItem('faunaViewUsers') || '[]');
+                    
+                    if (users.some(user => user.email === email)) {
+                        registerMessage.textContent = 'Este correo electrónico ya está registrado.';
+                        registerMessage.style.color = '#b32d2d';
+                        return;
+                    }
+                    
+                    if (users.some(user => user.username === username)) {
+                        registerMessage.textContent = 'Este nombre de usuario ya está en uso.';
+                        registerMessage.style.color = '#b32d2d';
+                        return;
+                    }
+
+                    users.push({ username, email, password });
+                    localStorage.setItem('faunaViewUsers', JSON.stringify(users));
+
+                    registerMessage.textContent = '¡Registro exitoso! Ahora puedes iniciar sesión.';
+                    registerMessage.style.color = 'var(--adventure-primary)';
+                    registerForm.reset();
+                });
+            }
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    loginMessage.textContent = '';
+
+                    const email = document.getElementById('login-email').value.trim();
+                    const password = document.getElementById('login-password').value;
+
+                    if (!email || !password) {
+                        loginMessage.textContent = 'Ingresa tu email y contraseña.';
+                        loginMessage.style.color = '#b32d2d';
+                        return;
+                    }
+
+                    let users = JSON.parse(localStorage.getItem('faunaViewUsers') || '[]');
+                    const foundUser = users.find(user => user.email === email && user.password === password);
+
+                    if (foundUser) {
+                        loginMessage.textContent = '¡Inicio de sesión exitoso! Redirigiendo...';
+                        loginMessage.style.color = 'var(--adventure-primary)';
+                        
+                        localStorage.setItem('faunaViewLoggedInUser', JSON.stringify({ email: foundUser.email, username: foundUser.username }));
+                        
+                        setTimeout(() => {
+                           window.location.href = 'viaje.html';
+                        }, 1500); 
+
+                    } else {
+                        loginMessage.textContent = 'Correo electrónico o contraseña incorrectos.';
+                        loginMessage.style.color = '#b32d2d';
+                    }
+                });
+            }
+
+            const signUpBtnLink = document.querySelector('.signUpBtn-link');
+            const signInBtnLink = document.querySelector('.signInBtn-link');
+            const signInFormDiv = document.querySelector('.formulario.sign-in');
+            const signUpFormDiv = document.querySelector('.formulario.sign-up');
+
+            if(signUpBtnLink && signInBtnLink && signInFormDiv && signUpFormDiv) {
+                signUpBtnLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    signInFormDiv.style.display = 'none';
+                    signUpFormDiv.style.display = 'block';
+                });
+
+                signInBtnLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    signUpFormDiv.style.display = 'none';
+                    signInFormDiv.style.display = 'block';
+                });
+
+                signUpFormDiv.style.display = 'none';
+            }
+
+        });
+    </script>
+</body>
+</html>

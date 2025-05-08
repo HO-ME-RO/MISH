@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>FaunaView - Guía de Exploración: Refugio de Montaña</title>
+    <link rel="stylesheet" href="style.css">
+
+    <header class="barra-superior">
+        <div class="logo-box">
+            <!-- Sugerencia: Reemplazar con tu logo temático. Ej: <img src="brujula-logo.png" alt="FaunaView Brújula"> -->
+            
+        </div>
+    
+        <div class="busqueda-barra-outer">
+            <div class="busqueda-box">
+                <input type="text" id="input-lugar" placeholder="¿Dónde? Explora destinos" autocomplete="off">
+            </div>
+            <div class="sugerencias-airbnb" id="sugerencias">
+                <!-- Las sugerencias se insertan aquí con JS -->
+            </div>
+        </div>
+    
+        <div class="acciones-box">
+            <div class="menu-usuario" id="btn-menu-usuario">
+                ☰ <span class="icono-perfil">👤</span>
+            </div>
+            <div class="panel-perfil" id="panel-perfil-usuario" style="display: none;">
+                <!-- Contenido del perfil se cargará aquí por JS -->
+                <div id="contenido-perfil">
+                    <p>Cargando perfil...</p>
+                </div>
+                <a href="inicio_secion.html" id="link-login-perfil">Iniciar Sesión / Registrarse</a>
+            </div>
+        </div>
+    </header>
+    
+    
+</head>
+
+
+
+<body class="pagina-con-panel">
+    <div class="contenedor-airbnb">
+        <h1 id="titulo-destino">🗺️ Cargando Aventura... 🗺️</h1>
+        <p class="ubicacion" id="ubicacion-destino">Por favor, selecciona un destino en la página de exploración.</p>
+
+        <div class="galeria" id="galeria-destino">
+            <img src="refugiosecretomontaña1.png" alt="Imagen de carga 1" id="img-galeria-1">
+            <img src="refugiosecretomontaña2.png" alt="Imagen de carga 2" id="img-galeria-2">
+            <img src="refugiosecretomontaña3.png" alt="Imagen de carga 3" id="img-galeria-3">
+        </div>        
+
+        <div class="detalles" id="detalles-hospedaje">
+            <p>Detalles del alojamiento y la expedición aparecerán aquí...</p>
+        </div>
+
+        <section class="anfitrion">
+            <div class="anfitrion-box" id="info-anfitrion">
+                <img src="jon.png" alt="Avatar del Guía" class="avatar" id="avatar-anfitrion">
+                <div>
+                    <p><strong id="nombre-anfitrion">Guía Local</strong></p>
+                    <p class="detalle" id="detalle-anfitrion">Los detalles del guía se mostrarán aquí.</p>
+                </div>
+            </div>
+        
+            <div class="info-extra" id="extras-anfitrion">
+                <p>Información adicional sobre el guía y el lugar...</p>
+            </div>
+        
+            <div class="descripcion" id="descripcion-destino">
+                <p>La crónica completa de esta aventura se revelará una vez selecciones tu destino...</p>
+            </div>
+        </section>
+        
+        <section class="habitaciones" id="seccion-habitaciones">
+            <h3><span style="color:#19c37d;">$</span> Valor por noche</h3>
+            <div class="habitaciones-box" id="lista-habitaciones" style="justify-content:center; flex-direction:column; align-items:center;">
+                <p style="font-size:1.3em; color:#2d572c; font-weight:bold; margin-top:10px;">
+                    $120 USD / noche
+                </p>
+            </div>
+        </section>
+
+        <!-- === INICIO: Mapa Interactivo Temporal === -->
+        <section class="mapa-explorador-seccion" id="seccion-mapa">
+            <h2 id="titulo-mapa">Mapa de la Montaña Nublada</h2>
+            <div class="mapa-placeholder" id="mapa-destino-placeholder">
+                <img id="img-mapa" src="mapa_monta.png" alt="Mapa del Destino" style="max-width: 100%; height: auto; border: 1px solid var(--adventure-border);">
+            </div>
+            <p class="aviso-mapa" id="aviso-mapa-placeholder" style="display:none;">El mapa detallado de tu destino se mostrará aquí.</p>
+        </section>
+        <!-- === FIN: Mapa Interactivo Temporal === -->
+
+        <div class="panoramas-box" id="seccion-panoramas">
+            <h2 id="titulo-panoramas">📜 Misiones y Descubrimientos</h2>
+            <p id="intro-panoramas">Las gestas y leyendas locales de tu destino aparecerán aquí...</p>
+            <ul id="lista-panoramas">
+                <li>Cargando misiones...</li>
+            </ul>
+            <button class="reservar" id="btn-panoramas">Ver Pergaminos de Disponibilidad</button>
+        </div>
+        
+
+        <div class="fauna-box" id="seccion-fauna">
+            <h2 id="titulo-fauna">📖 Bestiario de la Comarca</h2>
+            <ul id="lista-fauna">
+                <li>Descubriendo criaturas...</li>
+            </ul>
+            <p class="info-fuente" id="fuente-fauna">Fuentes del bestiario aparecerán aquí.</p>
+        </div>
+
+        <a href="explorar.html" class="btn-cambiar-viaje">🗺️ Elegir Otra Expedición 🗺️</a>
+        <button class="reservar" id="btn-comenzar-aventura">🚀 ¡Comenzar Aventura!</button>
+        <p id="mensaje-aventura" style="text-align: center; margin-top: 15px; font-weight: bold;"></p>
+
+    </div> <!-- Fin de .contenedor-airbnb -->
+
+    <!-- === INICIO: Panel Lateral Interactivo === -->
+    <aside class="panel-lateral-aventura">
+        <div class="panel-seccion">
+            <h4><i class="fas fa-clock"></i> Hora Local</h4>
+            <p class="dato-dinamico" id="panel-hora-local">Cargando hora...</p>
+        </div>
+        <div class="panel-seccion">
+            <h4><i class="fas fa-cloud-sun"></i> Clima Actual</h4>
+            <p class="dato-dinamico" id="panel-clima-actual">Consultando cielos...</p>
+            <p class="detalle-clima" id="panel-detalle-clima">...</p>
+        </div>
+        <div class="panel-seccion">
+            <h4><i class="fas fa-calendar-alt"></i> Calendario de Eventos</h4>
+            <div class="calendario-placeholder" id="panel-calendario">
+                <p>Verificando tablón de anuncios...</p>
+            </div>
+        </div>
+        <div class="panel-seccion">
+            <h4><i class="fas fa-bullhorn"></i> Anuncios del Gremio</h4>
+            <p class="anuncio-gremio" id="panel-anuncios-gremio">Escuchando rumores...</p>
+        </div>
+    </aside>
+    <!-- === FIN: Panel Lateral Interactivo === -->
+
+    <!-- Modal de Reserva -->
+    <div id="modal-reserva" class="modal-reserva" style="display:none;">
+      <div class="modal-contenido">
+        <span id="cerrar-modal" class="cerrar-modal">&times;</span>
+        <h3>Selecciona tu rango de fechas de expedición</h3>
+        <label>Desde: <input type="date" id="fecha-inicio" min="" /></label><br><br>
+        <label>Hasta: <input type="date" id="fecha-fin" min="" /></label><br><br>
+        <button id="confirmar-reserva" type="button">Reservar</button>
+        <p id="mensaje-reserva"></p>
+      </div>
+    </div>
+
+    <!-- Modal para Mensaje de Aventura -->
+    <div id="modal-mensaje-aventura" class="modal-reserva" style="display: none;"> <!-- Reutilizamos la clase base del modal -->
+      <div class="modal-contenido">
+        <span id="cerrar-modal-aventura" class="cerrar-modal">&times;</span>
+        <p id="texto-modal-aventura" style="font-size: 1.1em; line-height: 1.6;"></p>
+      </div>
+    </div>
+
+    <script>
+        let datosActuales = null; 
+        let reservaFechasRealizada = false; // <-- Variable para rastrear la reserva de fechas
+
+        // === INICIO: Lógica para Cargar Contenido Dinámico del Destino ===
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Obtener el parámetro 'destino' de la URL
+            const params = new URLSearchParams(window.location.search);
+            const destinoSeleccionado = params.get('destino') || 'montana_nublada'; // Valor por defecto
+
+            // 2. Definir los datos para cada destino
+            // En una aplicación real, esto podría venir de un archivo JSON, una API, etc.
+            const datosDestinos = {
+                'montana_nublada': {
+                    titulo: "⛰️ El Refugio Secreto de la Montaña Nublada ⛺️",
+                    ubicacion: "📍 Cumbres Brumosas, Cordillera de los Guardianes",
+                    imgGaleria1: "refugiosecretomontaña1.png",
+                    imgGaleria2: "refugiosecretomontaña2.png",
+                    imgGaleria3: "refugiosecretomontaña3.png",
+                    detallesHospedaje: "<p>👥 Hasta 2 Valientes Exploradores · 🛌 1 Alcoba Privada · 🏕️ 2 Lechos · 🛁 1 Santuario de Aseo</p><p>⭐ Puntuación de Expedición: 4.92 (Basado en 90 Informes de Viaje)</p>",
+                    avatarAnfitrion: "jon.png",
+                    nombreAnfitrion: "Tu Guía Veterano: Momo",
+                    detalleAnfitrion: "Maestro Explorador · 7 Ciclos Solares Cartografiando estas Tierras",
+                    extrasAnfitrion: "<p>🏞️ <strong>Territorio Legendario:</strong> Los cronistas alaban la mística de esta localización.</p><p>🌟 <strong>Momo, un Guardián del Saber:</strong> Sus hazañas y conocimientos son reconocidos por el Consejo de Exploradores.</p><p>🔄 <strong>Retirada Estratégica Gratuita:</strong> Cancela tu expedición hasta 5 días antes del inicio sin penalización.</p>",
+                    descripcionDestino: "<p>Nuestro puesto avanzado se halla en una cañada protegida de las antiguas erupciones de Pucón, a 5 leguas del bullicio del poblado. Solo vehículos 4x4 pueden surcar estos caminos. Una 'Tiny Home' con la esencia de lo arcano y el confort de lo moderno, perfecta para descifrar los secretos del entorno. ¡Tu leyenda comienza aquí!</p>",
+                    listaHabitacionesHTML: `
+                        <div class="hab-card">
+                            <img src="tinyhome_montana.png" alt="Tiny Home de Montaña" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                            <p><strong>Tiny Home de Montaña</strong><br>
+                            Cama doble, baño privado, calefacción a leña y vistas a la cumbre.<br>
+                            <span style="color:#2d572c;font-weight:bold;">$120 USD / noche</span>
+                            </p>
+                        </div>
+                        <div class="hab-card">
+                            <img src="cabaña_rustica.png" alt="Cabaña Rústica" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                            <p><strong>Cabaña Rústica</strong><br>
+                            Dos camas individuales, ambiente acogedor y acceso directo a la naturaleza.<br>
+                            <span style="color:#2d572c;font-weight:bold;">$90 USD / noche</span>
+                            </p>
+                        </div>
+                    `,
+                    listaPanoramasHTML: "<li>🦅 <strong>Senda de los Susurros Alados:</strong> Expedición al alba...</li><li>🦎 <strong>Dominio de las Salamandras de Roca:</strong> Travesía autoguiada...</li><li>🐇 <strong>Cacería Fotográfica del Conejo Lunar:</strong> Incursión crepuscular...</li><li>🦉 <strong>Vigilia de los Guardianes Nocturnos:</strong> Aventura bajo las estrellas...</li><li>🌿 <strong>Concilio con el Sabio del Bosque:</strong> Audiencia de 1 ciclo lunar...</li>",
+                    listaFaunaHTML: "<li>🐇 <strong>Conejo Errante Europeo:</strong> Alta probabilidad...</li><li>🐦 <strong>Zorzal Común, Bardo del Bosque:</strong> Frecuente en arboledas...</li><li>🦎 <strong>Lagartija Chilena, Escama de Sol:</strong> Hallada entre rocas...</li>",
+                    mapaImg: "mapa_monta.png",
+                    tituloMapa: "<i class=\"fas fa-map-marked-alt\"></i> Mapa de la Montaña Nublada",
+                    // Datos del Panel Lateral para Montaña Nublada
+                    panelHora: "15:30 PM (Estándar Montaña)",
+                    panelClima: "Despejado, 18°C",
+                    panelDetalleClima: "Brisa fresca de las cumbres.",
+                    panelCalendarioHTML: "<p><strong>Hoy:</strong> Avistamiento Cóndor Andino (Pico del Águila)</p><p><strong>Mañana:</strong> Apertura de la Senda Glaciar.</p><p><strong>Fin de Semana:</strong> Noche de Leyendas junto a la fogata.</p>",
+                    panelAnuncios: "¡El Guía Jon ha descubierto una nueva cueva! Pregunta por la 'Gruta Escondida'.",
+                    opcionesPernocta: [
+                        { nombre: "Tiny Home de Montaña", valor: 120 },
+                        { nombre: "Cabaña Rústica", valor: 90 }
+                    ]
+                },
+                'bosques_susurrantes': {
+                    titulo: "🌳 Los Bosques Susurrantes del Valle Escondido 🌲",
+                    ubicacion: "📍 Corazón del Valle Escondido, entre Raíces Ancestrales",
+                    imgGaleria1: "bosque1.jpg", // Necesitarás estas imágenes
+                    imgGaleria2: "bosque2.jpg",
+                    imgGaleria3: "bosque3.jpg",
+                    detallesHospedaje: "<p>👥 Hasta 4 Peregrinos del Bosque · 🛌 2 Cabañas Rústicas · 🏕️ 4 Lechos · 🔥 Fogata Comunal</p><p>⭐ Puntuación de Exploración: 4.8 (Basado en 75 Pergaminos del Viajero)</p>",
+                    avatarAnfitrion: "ari.png",
+                    nombreAnfitrion: "Guardiana Elara",
+                    detalleAnfitrion: "Ermitaña del Valle, conoce cada sendero y susurro del viento.",
+                    extrasAnfitrion: "<p>🦉 <strong>Sinfonía Nocturna:</strong> El bosque cobra vida por la noche con cantos de aves desconocidas.</p><p>🍄 <strong>Recolección Mística:</strong> Aprende a identificar hongos y plantas con propiedades curativas.</p><p>🌌 <strong>Cielos Prístinos:</strong> Lejos de la luz de las ciudades, las estrellas brillan con intensidad inusitada.</p>",
+                    descripcionDestino: "<p>En lo profundo de un valle olvidado por el tiempo, se encuentran los Bosques Susurrantes. Aquí, los árboles son ancianos que guardan secretos y los arroyos cantan melodías olvidadas. Ideal para quienes buscan una desconexión total y una reconexión con la esencia más pura de la naturaleza.</p>",
+                    listaHabitacionesHTML: `
+                        <div class="hab-card">
+                            <img src="bosque1.png" alt="Cabaña del Bosque" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                            <p><strong>Cabaña del Bosque</strong><br>
+                            Cabaña de madera, dos camas, rodeada de árboles centenarios.<br>
+                            <span style="color:#2d572c;font-weight:bold;">$100 USD / noche</span>
+                            </p>
+                        </div>
+                        <div class="hab-card">
+                            <img src="bosque2.png" alt="Zona de Fogata" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                            <p><strong>Zona de Fogata</strong><br>
+                            Espacio para dormir bajo las estrellas, junto a la fogata comunal.<br>
+                            <span style="color:#2d572c;font-weight:bold;">$60 USD / noche</span>
+                            </p>
+                        </div>
+                    `,
+                    listaPanoramasHTML: "<li>🍄 <strong>Ruta de los Hongos Ancestrales:</strong> Descubre setas bioluminiscentes.</li><li>🐾 <strong>Tras el Rastro del Ciervo Espectral:</strong> Sigilo y paciencia para avistar al rey del bosque.</li><li>🌌 <strong>Meditación bajo las Estrellas Milenarias:</strong> Conecta con el cosmos.</li>",
+                    listaFaunaHTML: "<li>🦌 <strong>Ciervo Espectral:</strong> Majestuoso y esquivo.</li><li>🐿️ <strong>Ardilla Parlanchina:</strong> Dicen que entiende el lenguaje humano.</li><li>🦊 <strong>Zorro de las Sombras:</strong> Astuto y sigiloso.</li>",
+                    mapaImg: "mapa_bosque.png",
+                    tituloMapa: "<i class=\"fas fa-map-marked-alt\"></i> Cartografía del Valle Escondido",
+                    // Datos del Panel Lateral para Bosques Susurrantes
+                    panelHora: "16:00 PM (Hora del Valle Profundo)",
+                    panelClima: "Nublado, 15°C",
+                    panelDetalleClima: "Niebla matutina persistente en cañadas.",
+                    panelCalendarioHTML: "<p><strong>Hoy:</strong> Taller de Identificación de Huellas con Guardiana Elara.</p><p><strong>Mañana:</strong> Círculo de Historias del Bosque al Anochecer.</p><p><strong>Próxima Luna Llena:</strong> Festival de las Luciérnagas.</p>",
+                    panelAnuncios: "Se han avistado recientemente Ciervos Espectrales cerca del Arroyo Plateado. ¡Máxima discreción!",
+                    opcionesPernocta: [
+                        { nombre: "Cabaña del Bosque", valor: 100 },
+                        { nombre: "Zona de Fogata", valor: 60 }
+                    ]
+                },
+                'costas_ancestrales': {
+                    titulo: "🌊 Las Costas Ancestrales de la Bahía Bioluminiscente 🦀",
+                    ubicacion: "📍 Bahía de las Luces Danzantes, donde el Mar se Encuentra con la Magia",
+                    imgGaleria1: "playa1.jpg",
+                    imgGaleria2: "playa2.jpg",
+                    imgGaleria3: "playa3.jpg",
+                    detallesHospedaje: "<p>👥 Hasta 3 Navegantes · 🚤 1 Choza de Pescador Renovada · 🌊 Acceso directo a la playa · 🛶 Kayaks disponibles</p><p>⭐ Puntuación Marina: 4.9 (Basado en 60 Bitácoras de Capitanes)</p>",
+                    avatarAnfitrion: "ibai.png",
+                    nombreAnfitrion: "Viejo Capitán Kai",
+                    detalleAnfitrion: "Conoce cada corriente y secreto de la bahía. Cuenta leyendas de monstruos marinos.",
+                    extrasAnfitrion: "<p>✨ <strong>Noches Luminosas:</strong> Observa el plancton brillar con cada ola.</p><p>🦀 <strong>Festín Intermareal:</strong> Descubre la rica vida en las pozas de marea.</p><p>🛶 <strong>Exploración en Kayak:</strong> Rema hacia cuevas marinas secretas al amanecer.</p>",
+                    descripcionDestino: "<p>Donde las olas besan arenas que han visto pasar eras, la Bahía Bioluminiscente te espera. De día, explora formaciones rocosas y vida marina. De noche, el océano se ilumina con una danza mágica de plancton. Una experiencia que tocará tu alma.</p>",
+                    listaHabitacionesHTML: `
+                        <div class="hab-card">
+                            <img src="choza_pescador.png" alt="Choza de Pescador" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                            <p><strong>Choza de Pescador</strong><br>
+                            Cama doble, decoración marina, acceso directo a la playa.<br>
+                            <span style="color:#2d572c;font-weight:bold;">$110 USD / noche</span>
+                            </p>
+                        </div>
+                        <div class="hab-card">
+                            <img src="kayak_camp.png" alt="Campamento de Kayak" style="width:100%;border-radius:8px;margin-bottom:10px;">
+                            <p><strong>Campamento de Kayak</strong><br>
+                            Tienda junto al mar, ideal para aventureros y amantes del agua.<br>
+                            <span style="color:#2d572c;font-weight:bold;">$70 USD / noche</span>
+                            </p>
+                        </div>
+                    `,
+                    listaPanoramasHTML: "<li>🛶 <strong>Travesía de las Cuevas Marinas:</strong> Explora grutas ocultas.</li><li>🎣 <strong>Pesca Ancestral al Alba:</strong> Aprende técnicas locales.</li><li>✨ <strong>Baño de Medianoche con Estrellas de Mar (Plancton):</strong> Una experiencia mágica.</li>",
+                    listaFaunaHTML: "<li>🦀 <strong>Cangrejo Ermitaño Gigante:</strong> Cambia de concha constantemente.</li><li>🐙 <strong>Pulpo Mimético:</strong> El maestro del camuflaje.</li><li>🌠 <strong>Pez Linterna Abisal (Avistamiento Raro):</strong> Solo en noches muy oscuras.</li>",
+                    mapaImg: "mapa_playa.png",
+                    tituloMapa: "<i class=\"fas fa-map-marked-alt\"></i> Mapa de la Bahía Bioluminiscente",
+                    // Datos del Panel Lateral para Costas Ancestrales
+                    panelHora: "15:00 PM (Hora de Marea Alta)",
+                    panelClima: "Parcialmente Nublado, 24°C",
+                    panelDetalleClima: "Viento marino moderado.",
+                    panelCalendarioHTML: "<p><strong>Esta Noche:</strong> Marea Baja - Ideal para ver bioluminiscencia.</p><p><strong>Mañana:</strong> Clase de nudos marineros con Capitán Kai.</p><p><strong>Todo el Mes:</strong> Temporada de anidación de Tortugas Marinas (no molestar).</p>",
+                    panelAnuncios: "¡El Capitán Kai ofrece viajes extra a la Isla de los Secretos! Plazas limitadas.",
+                    opcionesPernocta: [
+                        { nombre: "Choza de Pescador", valor: 110 },
+                        { nombre: "Campamento de Kayak", valor: 70 }
+                    ]
+                }
+            };
+
+            // 3. Seleccionar los datos del destino actual y ASIGNARLOS a la variable superior
+            datosActuales = datosDestinos[destinoSeleccionado]; 
+            // console.log("Datos del destino al cargar:", datosActuales); // Log eliminado
+
+            // 4. Actualizar el DOM (el contenido de la página)
+            if (datosActuales) {
+                document.getElementById('titulo-destino').innerHTML = datosActuales.titulo;
+                document.getElementById('ubicacion-destino').innerHTML = datosActuales.ubicacion;
+                
+                document.getElementById('img-galeria-1').src = datosActuales.imgGaleria1;
+                document.getElementById('img-galeria-1').alt = "Imagen 1 de " + datosActuales.titulo;
+                document.getElementById('img-galeria-2').src = datosActuales.imgGaleria2;
+                document.getElementById('img-galeria-2').alt = "Imagen 2 de " + datosActuales.titulo;
+                document.getElementById('img-galeria-3').src = datosActuales.imgGaleria3;
+                document.getElementById('img-galeria-3').alt = "Imagen 3 de " + datosActuales.titulo;
+
+                document.getElementById('detalles-hospedaje').innerHTML = datosActuales.detallesHospedaje;
+                
+                document.getElementById('avatar-anfitrion').src = datosActuales.avatarAnfitrion;
+                document.getElementById('nombre-anfitrion').innerHTML = datosActuales.nombreAnfitrion;
+                document.getElementById('detalle-anfitrion').innerHTML = datosActuales.detalleAnfitrion;
+                document.getElementById('extras-anfitrion').innerHTML = datosActuales.extrasAnfitrion;
+                
+                document.getElementById('descripcion-destino').innerHTML = datosActuales.descripcionDestino;
+
+                document.getElementById('img-mapa').src = datosActuales.mapaImg;
+                document.getElementById('img-mapa').alt = "Mapa de " + datosActuales.titulo;
+                document.getElementById('titulo-mapa').innerHTML = datosActuales.tituloMapa;
+                
+                // === PANORAMAS CON IMAGEN ===
+                const listaPanoramasEl = document.getElementById('lista-panoramas');
+                if (listaPanoramasEl && datosActuales.listaPanoramasHTML) {
+                    const parser = new DOMParser();
+                    const panoramasDoc = parser.parseFromString(`<ul>${datosActuales.listaPanoramasHTML}</ul>`, 'text/html');
+                    const panoramaLis = panoramasDoc.querySelectorAll('li');
+                    let panoramasConImgHTML = '';
+                    panoramaLis.forEach(li => {
+                        const strong = li.querySelector('strong');
+                        let nombrePanorama = strong ? strong.textContent.split(':')[0].trim() : li.textContent.split(':')[0].trim();
+                        let nombreArchivo = nombrePanorama
+                            .toLowerCase()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quitar tildes
+                            .replace(/[^a-z0-9\s_]/g, '') // Quitar caracteres especiales excepto espacios y guion bajo
+                            .replace(/\s+/g, '_') + '.png';
+                        // Insertar la imagen al principio del contenido del LI
+                        panoramasConImgHTML += `<li><img src="${nombreArchivo}" alt="${nombrePanorama}" class="img-panorama"> ${li.innerHTML}</li>`;
+                    });
+                    listaPanoramasEl.innerHTML = panoramasConImgHTML;
+                } else if (listaPanoramasEl) {
+                    listaPanoramasEl.innerHTML = '<li>No hay misiones disponibles por el momento.</li>';
+                }
+
+                // === FAUNA CON IMAGEN ===
+                const listaFaunaEl = document.getElementById('lista-fauna');
+                if (listaFaunaEl && datosActuales.listaFaunaHTML) {
+                    const parser = new DOMParser();
+                    const faunaDoc = parser.parseFromString(`<ul>${datosActuales.listaFaunaHTML}</ul>`, 'text/html');
+                    const faunaLis = faunaDoc.querySelectorAll('li');
+                    let faunaConImgHTML = '';
+                    faunaLis.forEach(li => {
+                        const strong = li.querySelector('strong');
+                        let nombreAnimal = strong ? strong.textContent.split(':')[0].trim() : li.textContent.split(':')[0].trim();
+                        let nombreArchivo = nombreAnimal
+                            .toLowerCase()
+                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Quitar tildes
+                            .replace(/[^a-z0-9\s_]/g, '') // Quitar caracteres especiales excepto espacios y guion bajo
+                            .replace(/\s+/g, '_') + '.png';
+                        // Insertar la imagen al principio del contenido del LI
+                        faunaConImgHTML += `<li><img src="${nombreArchivo}" alt="${nombreAnimal}" class="img-fauna"> ${li.innerHTML}</li>`;
+                    });
+                    listaFaunaEl.innerHTML = faunaConImgHTML;
+                } else if (listaFaunaEl) {
+                    listaFaunaEl.innerHTML = '<li>El bestiario de esta comarca aún es un misterio.</li>';
+                }
+                
+                // Actualizar Panel Lateral
+                if (document.getElementById('panel-hora-local')) {
+                    document.getElementById('panel-hora-local').textContent = datosActuales.panelHora;
+                }
+                if (document.getElementById('panel-clima-actual')) {
+                    document.getElementById('panel-clima-actual').textContent = datosActuales.panelClima;
+                }
+                if (document.getElementById('panel-detalle-clima')) {
+                    document.getElementById('panel-detalle-clima').textContent = datosActuales.panelDetalleClima;
+                }
+                if (document.getElementById('panel-calendario')) {
+                    document.getElementById('panel-calendario').innerHTML = datosActuales.panelCalendarioHTML;
+                }
+                if (document.getElementById('panel-anuncios-gremio')) {
+                    document.getElementById('panel-anuncios-gremio').textContent = datosActuales.panelAnuncios;
+                }
+                
+                document.title = "FaunaView - " + datosActuales.titulo.replace(/<[^>]*>?/gm, '');
+
+            } else {
+                // Manejar el caso de un destino no encontrado, quizás mostrar un error o el por defecto
+                console.warn('Destino no encontrado:', destinoSeleccionado, 'Se muestra el contenido por defecto.');
+                // El contenido por defecto ya está en el HTML, así que no se hace nada más aquí.
+            }
+        });
+        // === FIN: Lógica para Cargar Contenido Dinámico del Destino ===
+
+        // === Lógica para el modal de reserva (fechas) ===
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnPanoramas = document.getElementById('btn-panoramas');
+            const modalReserva = document.getElementById('modal-reserva');
+            const cerrarModalReserva = document.getElementById('cerrar-modal');
+            const fechaInicioInput = document.getElementById('fecha-inicio');
+            const fechaFinInput = document.getElementById('fecha-fin');
+            const btnConfirmarReserva = document.getElementById('confirmar-reserva');
+            const mensajeReservaP = document.getElementById('mensaje-reserva');
+
+            if (btnPanoramas) {
+                btnPanoramas.onclick = function() {
+                    if(modalReserva) modalReserva.style.display = 'flex'; // Mostrar modal si existe
+                    // Inicializar fechas
+                    const hoy = new Date(); 
+                    const yyyy = hoy.getFullYear();
+                    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+                    const dd = String(hoy.getDate()).padStart(2, '0');
+                    const minDate = `${yyyy}-${mm}-${dd}`;
+                    if(fechaInicioInput) { fechaInicioInput.min = minDate; fechaInicioInput.value = minDate; }
+                    if(fechaFinInput) { fechaFinInput.min = minDate; fechaFinInput.value = minDate; }
+                    if(mensajeReservaP) mensajeReservaP.innerHTML = ''; // Limpiar mensaje
+                };
+            }
+            if (cerrarModalReserva) {
+                cerrarModalReserva.onclick = function() {
+                   if(modalReserva) modalReserva.style.display = 'none';
+                };
+            }
+             if (fechaInicioInput && fechaFinInput) { 
+                 fechaInicioInput.onchange = function() {
+                    fechaFinInput.min = this.value;
+                    if (fechaFinInput.value < this.value) {
+                        fechaFinInput.value = this.value;
+                    }
+                 };
+             }
+             if (btnConfirmarReserva && fechaInicioInput && fechaFinInput && mensajeReservaP) { 
+                 btnConfirmarReserva.onclick = function() {
+                    const inicio = fechaInicioInput.value;
+                    const fin = fechaFinInput.value;
+                    const precioPorNoche = (datosActuales && datosActuales.opcionesPernocta && datosActuales.opcionesPernocta.length > 0) ? datosActuales.opcionesPernocta[0].valor : 100;
+
+                    if (inicio && fin && fin >= inicio) {
+                        const fechaInicio = new Date(inicio);
+                        const fechaFin = new Date(fin);
+                        const diffTime = fechaFin - fechaInicio;
+                        const noches = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+                        const total = noches * precioPorNoche;
+                        mensajeReservaP.innerHTML = 
+                            `<span style="color: #2d572c; font-weight: bold; font-size: 1.1em;">¡Fechas confirmadas!</span><br>` +
+                            `Reserva del ${inicio} al ${fin}.<br>` +
+                            `Noches: ${noches} | Total Estimado: $${total} USD`;
+                        
+                        reservaFechasRealizada = true; // <-- Marcar que se reservaron fechas
+                        
+                        setTimeout(() => {
+                           if(modalReserva) modalReserva.style.display = 'none';
+                        }, 1500); 
+
+                    } else {
+                        mensajeReservaP.innerHTML = '<span style="color: #b32d2d; font-weight: bold;">Por favor, selecciona un rango de fechas válido.</span>';
+                        reservaFechasRealizada = false; // Asegurarse que es false si hay error
+                    }
+                 };
+             }
+             // Cerrar modal de reserva al hacer clic fuera
+             if (modalReserva) {
+                 modalReserva.addEventListener('click', function(event) { 
+                    if (event.target == modalReserva) {
+                        modalReserva.style.display = "none";
+                    }
+                 });
+             }
+        });
+
+        // === Lógica de Clima y Hora (sin cambios) ===
+        // Reemplaza esto con tu propia API KEY de OpenWeatherMap
+        const API_KEY = "AQUÍ_TU_API_KEY";
+
+        // Coordenadas por destino
+        const coordenadasPorDestino = {
+          'montana_nublada': { lat: -33.8333, lon: -70.3500 }, // Cajón del Maipo
+          'bosques_susurrantes': { lat: -39.5747, lon: -71.9333 }, // Coñaripe
+          'costas_ancestrales': { lat: -27.1167, lon: -70.8667 } // Bahía Inglesa
+        };
+
+        // Detectar destino actual
+        function getDestinoActual() {
+          const params = new URLSearchParams(window.location.search);
+          return params.get('destino') || 'montana_nublada';
+        }
+
+        // Actualizar hora local (hora del navegador)
+        function actualizarHoraLocal() {
+          const ahora = new Date();
+          const opciones = { hour: '2-digit', minute: '2-digit', hour12: false };
+          const hora = ahora.toLocaleTimeString('es-CL', opciones);
+          document.getElementById('panel-hora-local').innerHTML = `${hora} (Hora local)`;
+        }
+        setInterval(actualizarHoraLocal, 1000);
+        actualizarHoraLocal();
+
+        // Actualizar clima según el destino
+        function actualizarClima() {
+          const destino = getDestinoActual();
+          const coords = coordenadasPorDestino[destino];
+          if (!coords) return;
+
+          const url = `https://api.openweathermap.org/data/2.5/weather?lat=${coords.lat}&lon=${coords.lon}&appid=${API_KEY}&units=metric&lang=es`;
+
+          fetch(url)
+            .then(response => {
+              if (!response.ok) throw new Error("Respuesta no OK");
+              return response.json();
+            })
+            .then(data => {
+              if (!data.main || !data.weather) throw new Error("Datos incompletos");
+              const temp = Math.round(data.main.temp);
+              const desc = data.weather[0].description;
+              document.getElementById('panel-clima-actual').innerHTML = `${desc.charAt(0).toUpperCase() + desc.slice(1)}, ${temp}°C`;
+              document.getElementById('panel-detalle-clima').innerHTML = data.weather[0].main;
+            })
+            .catch((err) => {
+              document.getElementById('panel-clima-actual').innerHTML = "No disponible";
+              document.getElementById('panel-detalle-clima').innerHTML = "";
+              console.error("Error al obtener el clima:", err);
+            });
+        }
+        actualizarClima();
+        setInterval(actualizarClima, 600000); // Actualiza cada 10 minutos
+
+        const localidades = [
+          {
+            nombre: "Montaña",
+            destino: "montana_nublada",
+            descripcion: "Cajón del Maipo, Chile. Aventuras en la montaña.",
+            icono: "⛰️",
+            colorFondo: "#e6f0fa"
+          },
+          {
+            nombre: "Bosque",
+            destino: "bosques_susurrantes",
+            descripcion: "Coñaripe, Región de los Ríos. Naturaleza y tranquilidad.",
+            icono: "🌳",
+            colorFondo: "#eafae6"
+          },
+          {
+            nombre: "Costa",
+            destino: "costas_ancestrales",
+            descripcion: "Bahía Inglesa, Norte de Chile. Playas y mar.",
+            icono: "🏖️",
+            colorFondo: "#f9f6e6"
+          }
+        ];
+
+        const inputLugar = document.getElementById('input-lugar');
+        const sugerencias = document.getElementById('sugerencias');
+
+        function mostrarSugerencias() {
+          const valor = inputLugar.value.trim().toLowerCase();
+          sugerencias.innerHTML = '';
+          sugerencias.classList.add('mostrar');
+          let filtradas = localidades.filter(loc => loc.nombre.toLowerCase().includes(valor));
+          let html = `<div class="sugerencias-titulo">Destinaciones sugeridas</div>`;
+          if (filtradas.length === 0) {
+            html += `<div class="sugerencia-no-encontrado">Destino no encontrado</div>`;
+          } else {
+            filtradas.forEach(loc => {
+              html += `
+                <div class="sugerencia-item" onclick="window.location.href='viaje.html?destino=${loc.destino}'">
+                  <span class="sugerencia-icono-circulo" style="background:${loc.colorFondo || '#f3f7fa'}">${loc.icono}</span>
+                  <span class="sugerencia-textos">
+                    <span class="sugerencia-nombre">${loc.nombre}</span>
+                    <span class="sugerencia-desc">${loc.descripcion}</span>
+                  </span>
+                </div>
+              `;
+            });
+          }
+          sugerencias.innerHTML = html;
+        }
+
+        inputLugar.addEventListener('focus', function() {
+          mostrarSugerencias();
+        });
+
+        inputLugar.addEventListener('input', function() {
+          mostrarSugerencias();
+        });
+
+        document.addEventListener('click', function(e) {
+          if (!sugerencias.contains(e.target) && e.target !== inputLugar) {
+            sugerencias.classList.remove('mostrar');
+          }
+        });
+
+        // === Lógica Botón Comenzar Aventura (Modificada) ===
+        document.addEventListener('DOMContentLoaded', function() {
+             // Asegurarse que este código corre después de los otros DOMContentLoaded
+
+             const btnComenzarAventura = document.getElementById('btn-comenzar-aventura');
+             const modalMensajeAventura = document.getElementById('modal-mensaje-aventura');
+             const textoModalAventura = document.getElementById('texto-modal-aventura');
+             const cerrarModalAventura = document.getElementById('cerrar-modal-aventura');
+
+             if (btnComenzarAventura && modalMensajeAventura && textoModalAventura && cerrarModalAventura) {
+                 btnComenzarAventura.addEventListener('click', function() {
+                    
+                    // 1. Verificar si se reservaron fechas primero
+                    if (!reservaFechasRealizada) {
+                        textoModalAventura.innerHTML = 'Primero debes reservar tus fechas de expedición usando el botón <strong>"Ver Pergaminos de Disponibilidad"</strong>.';
+                        textoModalAventura.style.color = '#b32d2d'; // Rojo aviso
+                        modalMensajeAventura.style.display = 'flex';
+                        return; // Detener ejecución si no hay fechas
+                    }
+
+                    // 2. Si hay fechas, proceder con la lógica de login
+                    const loggedInUserData = JSON.parse(localStorage.getItem('faunaViewLoggedInUser'));
+
+                    if (datosActuales) { 
+                        if (loggedInUserData && loggedInUserData.email) {
+                            let precioBase = 100; 
+                            if (datosActuales.opcionesPernocta && datosActuales.opcionesPernocta.length > 0) {
+                                precioBase = datosActuales.opcionesPernocta[0].valor;
+                            }
+                            const garantia = precioBase * 0.5;
+                            textoModalAventura.textContent = `¡Aventura confirmada! Se enviarán a ${loggedInUserData.email} los detalles para transferir $${garantia} USD (50%) como garantía.`;
+                            textoModalAventura.style.color = 'var(--adventure-primary)';
+                        } else {
+                            textoModalAventura.innerHTML = 'Debes iniciar sesión o registrarte para comenzar la aventura. Haz clic en el icono de perfil 👤 para <a href="inicio_secion.html" style="color: var(--adventure-primary); font-weight: bold;">iniciar sesión</a>.';
+                            textoModalAventura.style.color = '#b32d2d'; 
+                        }
+                        modalMensajeAventura.style.display = 'flex'; 
+                    } else {
+                        textoModalAventura.textContent = 'Error: No se pudieron cargar los datos del destino para la reserva.';
+                        textoModalAventura.style.color = '#b32d2d';
+                        modalMensajeAventura.style.display = 'flex';
+                    }
+                 });
+
+                 // Eventos para cerrar el modal (sin cambios)
+                 cerrarModalAventura.addEventListener('click', function() {
+                    modalMensajeAventura.style.display = 'none';
+                 });
+                 modalMensajeAventura.addEventListener('click', function(event) {
+                    if (event.target === modalMensajeAventura) {
+                        modalMensajeAventura.style.display = 'none';
+                    }
+                 });
+             }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+          const btnMenuUsuario = document.getElementById('btn-menu-usuario');
+          const panelPerfilUsuario = document.getElementById('panel-perfil-usuario');
+          const contenidoPerfil = document.getElementById('contenido-perfil');
+          const linkLoginPerfil = document.getElementById('link-login-perfil');
+
+          let isUserLoggedIn = false;
+          let userData = {}; // Los datos se cargarán desde localStorage si existen
+
+          // 1. Comprobar si hay un usuario logueado en localStorage al cargar la página
+          const loggedInUserData = JSON.parse(localStorage.getItem('faunaViewLoggedInUser'));
+          if (loggedInUserData && loggedInUserData.email) {
+              isUserLoggedIn = true;
+              userData = {
+                  nombre: loggedInUserData.username || "Explorador", // Usa username o un default
+                  email: loggedInUserData.email,
+                  // Puedes añadir más datos si los guardaste o los quieres simular
+                  rango: "Turista principiante", // Ejemplo, podrías guardarlo al registrar
+                  expediciones: 12 // Ejemplo
+              };
+          }
+
+          function actualizarPanelPerfil() {
+              if (isUserLoggedIn) {
+                  contenidoPerfil.innerHTML = `
+                      <h4>Perfil de ${userData.nombre}</h4>
+                      <div class="datos-usuario">
+                          <p><strong>Email:</strong> ${userData.email}</p>
+                          <p><strong>Rango:</strong> ${userData.rango || 'Aprendiz'}</p>
+                      </div>
+                  `;
+                  linkLoginPerfil.textContent = 'Cerrar Sesión';
+                  linkLoginPerfil.href = '#logout'; 
+              } else {
+                  contenidoPerfil.innerHTML = `
+                      <h4>Perfil de Invitado</h4>
+                      <p>No has iniciado sesión. Tus progresos y hallazgos no se guardarán permanentemente.</p>
+                      <p>¡Regístrate para unirte al Gremio de Exploradores y acceder a todas las funciones!</p>
+                  `;
+                  linkLoginPerfil.textContent = 'Iniciar Sesión / Registrarse';
+                  linkLoginPerfil.href = 'inicio_secion.html';
+              }
+          }
+
+          // 2. Función para cerrar sesión
+          function logout() {
+              localStorage.removeItem('faunaViewLoggedInUser');
+              isUserLoggedIn = false;
+              userData = {};
+              actualizarPanelPerfil();
+              // Opcional: cerrar el panel al hacer logout
+              if (panelPerfilUsuario) panelPerfilUsuario.style.display = 'none'; 
+          }
+
+          if (btnMenuUsuario && panelPerfilUsuario) {
+              btnMenuUsuario.addEventListener('click', function(event) {
+                  event.stopPropagation(); 
+                  const isVisible = panelPerfilUsuario.style.display === 'block';
+                  panelPerfilUsuario.style.display = isVisible ? 'none' : 'block';
+                  if (panelPerfilUsuario.style.display === 'block') {
+                      actualizarPanelPerfil(); // Actualiza siempre al mostrar
+                  }
+              });
+
+              // Cerrar el panel si se hace clic fuera
+              window.addEventListener('click', function(event) {
+                  if (panelPerfilUsuario.style.display === 'block' && !panelPerfilUsuario.contains(event.target) && !btnMenuUsuario.contains(event.target)) {
+                      panelPerfilUsuario.style.display = 'none';
+                  }
+              });
+
+              // 3. Añadir evento al link para login/logout
+              linkLoginPerfil.addEventListener('click', function(event) {
+                  if (linkLoginPerfil.getAttribute('href') === '#logout') {
+                      event.preventDefault(); // Previene ir a #logout
+                      logout();
+                  }
+                  // Si es el link de login, simplemente deja que el enlace funcione
+              });
+          }
+          
+          // Llamada inicial para establecer el estado correcto del panel
+          actualizarPanelPerfil(); 
+        });
+    </script>
+
+    <!-- <script src="./static/script/inicio_secion.js"></script> --> 
+</body>
+</html>

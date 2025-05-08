@@ -1,0 +1,6 @@
+@font-face {
+    font-family: 'boxicons';
+    src: url('/fonts/boxicons.woff2') format('woff2'),
+         url('/fonts/boxicons.woff') format('woff'),
+         url('/fonts/boxicons.ttf') format('truetype');
+  }  

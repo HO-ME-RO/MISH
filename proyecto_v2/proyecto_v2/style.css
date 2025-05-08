@@ -1,0 +1,1993 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap'); /* Nueva fuente para aventura */
+
+*{
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --body-color: #E0F2FE; /* Este es el color de fondo original, lo cambiaremos en body */
+    --sidebar-color:#FFFFFF;
+    --primary-color:#007BFF;
+    --primary-color-light:#B9E2FC;
+    --toggle-color:#DDDD;
+    --text-color:#0A2540;
+
+    /* Nuevas variables para el tema Aventura (Actualizadas) */
+    --adventure-bg: #F5F5F5;           /* Gris Muy Claro */
+    --adventure-text: #3C362A;         /* Marrón Oscuro Profundo */
+    --adventure-primary: #4A6D4D;       /* Verde Bosque Profundo */
+    --adventure-secondary: #C8A47E;     /* Madera Clara/Arena */
+    --adventure-border: #A99A86;       /* Marrón-Grisáceo Suave */
+    --adventure-accent: #D97D54;       /* Naranja Quemado/Óxido (Nuevo Acento) */
+    --adventure-heading-font: 'Merriweather', serif;
+    --adventure-body-font: 'Poppins', sans-serif; /* Ya importada */
+
+    --tran-02: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+}
+
+
+body{
+    font-family: var(--adventure-body-font);
+    background-image: url('paisaje.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--adventure-text);
+    min-height: 100vh;
+    margin: 0; /* Reiniciar margen por defecto del body */
+    position: relative; /* Necesario para el z-index del pseudo-elemento */
+    z-index: 0; /* Asegurar que el contenido del body esté sobre el pseudo-elemento de fondo */
+}
+
+body::before {
+    content: "";
+    position: fixed; /* Para cubrir toda la pantalla como el fondo */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Superposición oscura semitransparente */
+    z-index: -1; /* Detrás del contenido, encima de la imagen de fondo (implícita) */
+}
+
+/* Estilos específicos para páginas con el panel lateral */
+body.pagina-con-panel {
+    padding-right: 300px; /* Espacio para el panel lateral fijo */
+}
+
+body.dark {
+    --body-color: #0A192F;
+    --sidebar-color:#172A45;
+    --primary-color:#64FFDA;
+    --primary-color-light:#223B5A;
+    --toggle-color:#FFFFFF;
+    --text-color:#CCD6F6;
+}
+
+.sidebar.close{
+    width: 88px;
+
+}
+
+/* ====resuable css===*/
+
+.sidebar .text{
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: var(--tran-04);
+}
+
+.sidebar .image{
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar.close .text{
+    opacity: 0;
+    
+}
+
+/* ====sidebar===*/
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background: var(--sidebar-color);
+    transition: var(--tran-04);    
+    z-index: 100;
+}
+.sidebar li{
+    height: 50px;
+    margin-top: 10px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+.sidebar li .icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    font-size: 20px;
+}
+
+.sidebar li .icon,
+.sidebar li .text{
+    color: var(--text-color);
+    transition: var(--tran-02);
+}
+
+.sidebar header {
+    position: relative;
+}
+.sidebar .image-text img{
+    width: 40px;
+    border-radius: 6px;
+}
+
+.sidebar header .image-text{
+    display: flex;
+    align-items: center;
+}
+
+
+
+header .image-text .header-text{
+    display: flex;
+    flex-direction: column;
+}
+
+.header-text .name{
+    font-weight: 600;
+}
+
+.header-text .profession{
+    margin-top: -2px;
+}
+
+.sidebar header .toggle{
+    position: absolute;
+    top: 50%;
+    right: -25px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 25px;
+    width: 25px;
+    background: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius:50%;
+    color: var(--sidebar-color);
+    font-size: 22px;
+    transition: var(--tran-03);
+}
+
+.sidebar.close header .toggle{
+    transform: translateY(-50%);
+}
+
+body.dark .sidebar header .toggle{
+    color: var(--text-color);
+}
+
+
+.sidebar .search-box{
+    background: var(--primary-color-light);
+    border-radius: 6px;
+}
+
+.search-box input{
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-radius: 6px;
+    background: var(--primary-color-light);
+}
+
+.sidebar li a{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: var(--tran-04);
+}
+
+.sidebar li a:hover{
+    background: var(--primary-color);
+}
+
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text{
+    color: var(--sidebar-color);
+}
+
+body.dark .sidebar li a:hover .icon,
+body.dark .sidebar li a:hover .text{
+    color: var(--text-color);
+}
+
+.sidebar .menu-bar{
+    height: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-bar .mode{
+    position: relative;
+    border-radius: 6px;
+    background: var(--primary-color-light);
+}
+
+.menu-bar .mode .moon-sun{
+    height: 50px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.menu-bar .mode i{
+    position: absolute;
+}
+
+.menu-bar .mode i.sun{
+    opacity:0;
+}
+body.dark .menu-bar .mode i.sun{
+    opacity: 1;
+}
+body.dark .menu-bar .mode i.moon{
+    opacity: 0;
+}
+
+.menu-bar .mode .toggle-switch{
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    cursor: pointer;
+    min-width: 60px;
+}
+
+.toggle-switch .switch{
+    position: relative;
+    height: 22px;
+    width: 44px;
+    border-radius: 25px;
+    background: var(--toggle-color);
+}
+
+.switch::before{
+    content: '';
+    position: absolute;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    background: var(--sidebar-color);
+    transition: var(--tran-03);
+}
+
+body.dark .switch::before{
+    left: 24px;
+}
+
+.home{
+    position: relative;
+    height: 100vh;
+    left: 250px;
+    width: calc(100% - 250px);
+    background: var(--body-color);
+    transition: var(--tran-05);
+}
+
+.home .text{
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 8px 40px;
+}
+
+.sidebar.close ~.home{
+    left: 88px;
+    width: calc(100% - 88px);
+}
+
+
+.home-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 40px;
+    gap: 40px;
+}
+.home {
+    display: flex;
+    flex-direction: column; /* ✅ Acomoda verticalmente */
+    align-items: flex-end;  /* ✅ Alinea a la derecha */
+    justify-content: center;
+    height: 100vh;
+    gap: 20px; /* Espacio entre tarjetas */
+    padding-right: 50px; /* Opcional: separa del borde derecho */
+}
+.card{
+    max-width: 350px;
+    width: 100%;
+    background: var(--primary-color-light);
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card .title {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.cord .content{
+    margin-top: 20px;
+}
+
+.card label.box{
+    background: var(--toggle-color);
+    display: flex;
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--tran-04);
+}
+#uno:checked ~ label.primero .circle,
+#dos:checked ~ label.segundo .circle,
+#tres:checked ~ label.tercero .circle
+#cuatro:checked ~ label.cuarto .circle,
+#cinco:checked ~ label.quinto .circle,
+#seis:checked ~ label.sexto .circle,
+#siete:checked ~ label.septimo .circle,
+#ocho:checked ~ label.octavo .circle,
+#nueve:checked ~ label.noveno .circle{
+    border-color: black;
+}
+.card label.box:hover{
+    background: var(--primary-color);
+}
+
+.card label.box .course{
+    display: flex;
+    width: 100%;
+    align-items: center;
+
+}
+
+.card label.box .circle{
+    height: 22px;
+    width: 22px;
+    background: var(--primary-color-light);
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 5px solid transparent;
+    display: inline-block;
+    box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.2);
+}
+#uno:checked ~ label.primero .circle,
+#dos:checked ~ label.segundo .circle,
+#tres:checked ~ label.tercero .circle,
+#cuatro:checked ~ label.cuarto .circle,
+#cinco:checked ~ label.quinto .circle,
+#seis:checked ~ label.sexto .circle,
+#siete:checked ~ label.septimo .circle,
+#ocho:checked ~ label.octavo .circle,
+#nueve:checked ~ label.noveno .circle{
+    border-color: black;
+    background: #FFF;
+} 
+
+.card input[type="radio"]{
+    display: none;
+}
+.contenedor-imagen-fija {
+    position: fixed;
+    top: 50%;
+    left: 250px; /* para no tapar el sidebar (que mide 250px) */
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none; /* Para que no interfiera con clics */
+}
+
+.marco-blanco {
+    background-color: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    max-width: 240px;
+    max-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.marco-blanco img {
+    max-width: 2000px;
+    max-height: 2000px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Estilos para la página de inicio de sesión (inicio_secion.html) */
+
+.contenedor-login {
+    display: flex;
+    flex-direction: column; /* Cambiado a columna para el header y luego los forms */
+    justify-content: center;
+    align-items: center; 
+    min-height: 100vh; 
+    padding: 20px;
+    /* background-color: var(--body-color); Ya no es necesario, body general tiene el fondo aventura */
+    gap: 20px; 
+    /* flex-wrap: wrap; No es necesario si es columna principal */
+}
+
+.login-header-aventura {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--adventure-text);
+}
+
+.logo-login-aventura {
+    max-width: 150px; /* Ajusta según tu logo */
+    margin-bottom: 15px;
+}
+
+.login-header-aventura h3 {
+    font-family: var(--adventure-heading-font);
+    color: #FFFFFF; /* Color blanco */
+    font-size: 26px;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.2); /* Sombra sutil para legibilidad */
+}
+
+.login-header-aventura p {
+    font-size: 16px;
+    opacity: 0.9;
+    max-width: 500px;
+    margin: 0 auto;
+    color: #FFFFFF; /* Color blanco */
+}
+
+.formularios-login {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start; /* Alinear por la parte superior */
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 840px; /* Espacio para dos formularios de 400px + gap */
+}
+
+.formulario {
+    background-color: var(--adventure-secondary); /* Fondo de cuero/terracota */
+    padding: 30px;
+    border-radius: 8px;
+    border: 2px solid var(--adventure-border);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px; 
+    color: var(--adventure-bg); /* Texto claro sobre fondo oscuro */
+}
+
+.formulario h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--adventure-bg); /* Título claro */
+    font-family: var(--adventure-heading-font); /* Fuente de aventura */
+    font-weight: 700;
+    font-size: 24px;
+    text-shadow: 1px 1px 0px var(--adventure-text);
+}
+
+.input-contenedor {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-contenedor i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: var(--adventure-bg); /* Icono claro */
+    opacity: 0.7;
+}
+
+.input-contenedor input[type="email"],
+.input-contenedor input[type="password"],
+.input-contenedor input[type="text"] {
+    width: 100%;
+    padding: 12px 15px 12px 45px; 
+    border: 1px solid var(--adventure-border); 
+    border-radius: 6px;
+    background-color: var(--adventure-bg); /* Fondo claro para input */
+    color: var(--adventure-text); /* Texto oscuro en input */
+    font-size: 16px;
+    transition: border-color var(--tran-02);
+}
+
+.input-contenedor input[type="email"]:focus,
+.input-contenedor input[type="password"]:focus,
+.input-contenedor input[type="text"]:focus {
+    outline: none;
+    border-color: var(--adventure-primary);
+}
+
+.input-contenedor label {
+    position: absolute;
+    top: 50%;
+    left: 45px;
+    transform: translateY(-50%);
+    color: var(--adventure-text);
+    opacity: 0.6;
+    pointer-events: none;
+    transition: all var(--tran-03);
+}
+
+.input-contenedor input:focus ~ label,
+.input-contenedor input:valid ~ label {
+    top: -10px;
+    left: 45px;
+    font-size: 12px;
+    color: var(--adventure-primary); /* Color primario aventura para label activa */
+    opacity: 1;
+    background-color: var(--adventure-secondary); /* Fondo de la tarjeta para que se vea bien */
+    padding: 0 5px;
+}
+
+.olvidar {
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.olvidar label {
+    display: flex;
+    align-items: center;
+    color: var(--adventure-bg); /* Texto claro */
+}
+
+.olvidar input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: var(--adventure-primary); /* Color de aventura para el checkbox */
+}
+
+.olvidar a {
+    color: var(--adventure-bg); /* Enlace claro */
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+.olvidar a:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
+.formulario button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--adventure-primary); /* Botón con color primario aventura */
+    color: var(--adventure-bg); /* Texto claro */
+    border: 2px solid var(--adventure-text); /* Borde oscuro */
+    box-shadow: 2px 2px 0px var(--adventure-text); /* Efecto botón 2D */
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: var(--adventure-heading-font);
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.15s ease;
+}
+
+.formulario button[type="submit"]:hover {
+    background-color: var(--adventure-text); 
+    color: var(--adventure-bg);
+    border-color: var(--adventure-primary);
+    box-shadow: 1px 1px 0px var(--adventure-primary);
+    transform: translate(1px, 1px);
+}
+
+.formulario button[type="submit"]:active {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+
+.signUp-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.signUp-link p {
+    color: var(--adventure-bg); /* Texto claro */
+}
+
+.signUp-link a {
+    color: var(--adventure-bg); /* Enlace claro */
+    font-weight: bold;
+    text-decoration: none;
+    opacity: 0.9;
+}
+
+.signUp-link a:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
+/* Adaptación para el modo oscuro si es necesario (REVISAR SI SE MANTIENE MODO OSCURO) */
+/* Si el tema aventura es el principal, el modo oscuro podría necesitar su propia paleta aventura oscura */
+/* Por ahora, se asume que el tema aventura es el único activo para estas páginas */
+
+/* body.dark .formulario { ... } */ 
+/* ... (eliminar o adaptar los estilos body.dark específicos para el formulario si ya no aplican) ... */
+
+/* Estilos para la página de detalles tipo Airbnb (caca.html) */
+
+/* Estilos generales para el contenedor de caca.html */
+.contenedor-airbnb {
+    /* background-color: var(--adventure-bg); Ya no es necesario, hereda del body */
+    /* color: var(--adventure-text); Ya no es necesario, hereda del body */
+    /* font-family: var(--adventure-body-font); Ya no es necesario, hereda del body */
+    max-width: 1120px; /* Ancho estándar para contenido principal */
+    margin: 0 auto; /* Centrar el contenido en el espacio disponible */
+    padding: 20px; /* Mantenemos el padding interno del contenedor */
+    padding-bottom: 50px; /* Más espacio al final */
+    /* margin-right: 300px; Eliminado, el body ahora maneja el espacio para el panel */
+}
+
+/* Barra Superior */
+.barra-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0; /* Padding vertical, horizontal se ajusta con el contenedor-airbnb */
+    border-bottom: 1px solid var(--toggle-color);
+    margin-bottom: 30px;
+}
+
+.logo-box .logo-airbnb {
+    height: 32px; /* Ajustar tamaño del logo */
+}
+
+.busqueda-barra-outer {
+    position: relative; /* Importante para el posicionamiento absoluto de las sugerencias */
+    display: flex;
+    justify-content: center;
+    margin: 32px 0 24px 0;
+    max-width: 600px;
+    width: 100%;
+}
+
+.busqueda-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 32px;
+    box-shadow: 0 2px 12px rgba(60,60,60,0.08);
+    padding: 8px 32px;
+    gap: 32px;
+    min-width: 420px;
+    max-width: 600px;
+    width: 100%;
+}
+
+.busqueda-box input[type="text"] {
+    border: none;
+    background: transparent;
+    font-size: 1.1em;
+    color: #4a4a4a;
+    outline: none;
+    padding: 10px 0;
+    width: 100%;
+    min-width: 160px;
+    transition: background 0.2s;
+}
+
+.busqueda-box input[type="text"]:focus {
+    background: #f3f7fa;
+    border-radius: 16px;
+}
+
+@media (max-width: 600px) {
+    .busqueda-box {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 10px;
+        min-width: unset;
+        max-width: 98vw;
+    }
+}
+
+.btn-buscar {
+    background-color: var(--primary-color);
+    color: var(--sidebar-color);
+    border: none;
+    border-radius: 50%; /* Botón de búsqueda circular */
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color var(--tran-03);
+}
+
+.btn-buscar:hover {
+    background-color: #0056b3; /* Oscurecer el primario en hover */
+}
+
+.acciones-box {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre elementos de acción */
+}
+
+.acciones-box a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: background-color var(--tran-02);
+}
+
+.acciones-box a:hover {
+    background-color: var(--primary-color-light);
+}
+
+.acciones-box .icono {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.acciones-box .icono:hover {
+    background-color: var(--primary-color-light);
+}
+
+.menu-usuario {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--toggle-color);
+    border-radius: 30px;
+    padding: 5px 12px;
+    cursor: pointer;
+    transition: box-shadow var(--tran-02);
+}
+
+.menu-usuario:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.menu-usuario .icono-perfil {
+    font-size: 20px;
+    margin-left: 8px;
+}
+
+/* Título y ubicación */
+.contenedor-airbnb h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.ubicacion {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+/* Galería de Imágenes */
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Columnas responsivas */
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.galeria img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover; /* Asegura que las imágenes cubran el espacio sin deformarse */
+    aspect-ratio: 4/3; /* Proporción para las imágenes */
+}
+
+/* Detalles generales (huéspedes, reseñas) */
+.detalles {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--toggle-color);
+}
+
+.detalles p {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+/* Sección Anfitrión */
+.anfitrion {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--toggle-color);
+}
+
+.anfitrion-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 56px; /* Tamaño del avatar */
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.anfitrion-box p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.anfitrion-box .detalle {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.info-extra p {
+    font-size: 15px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.info-extra strong {
+    color: var(--text-color); /* Asegurar que el strong use el color de texto principal */
+}
+
+.descripcion {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-top: 20px;
+}
+
+/* Sección Habitaciones */
+.habitaciones {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--toggle-color);
+}
+
+.habitaciones h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.habitaciones-box {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto; /* Permite scroll horizontal si hay muchas tarjetas */
+    padding-bottom: 10px; /* Espacio para el scrollbar si aparece */
+}
+
+.hab-card {
+    border: 1px solid var(--toggle-color);
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 200px; /* Ancho mínimo de las tarjetas de habitación */
+    background-color: var(--sidebar-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.hab-card p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Secciones Panoramas y Fauna */
+.panoramas-box, .fauna-box {
+    margin-bottom: 30px;
+    padding: 25px;
+    background-color: var(--primary-color-light);
+    border-radius: 12px;
+}
+
+.panoramas-box h2, .fauna-box h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--primary-color); /* Usar color primario para estos títulos */
+}
+
+.panoramas-box p, .fauna-box p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.panoramas-box ul, .fauna-box ul {
+    list-style-position: inside;
+    padding-left: 0; /* Quitar padding por defecto si se usa inside */
+    margin-bottom: 20px;
+}
+
+.panoramas-box li, .fauna-box li {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.fauna-box .info-fuente {
+    font-size: 13px;
+    opacity: 0.7;
+    text-align: right;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+/* Botones de Reserva */
+.reservar {
+    display: inline-block; /* Para que el padding y margin funcionen bien */
+    background-color: var(--primary-color);
+    color: var(--sidebar-color);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--tran-03);
+    margin-top: 10px; /* Espacio arriba del botón */
+}
+
+.reservar:hover {
+    background-color: #0056b3;
+}
+
+/* Ajustes modo oscuro para caca.html */
+body.dark .barra-superior {
+    border-bottom-color: var(--primary-color-light);
+}
+
+body.dark .busqueda-box {
+    border-color: var(--primary-color-light);
+    background-color: var(--sidebar-color); /* Puede ser el mismo o --body-color si se prefiere más oscuro */
+}
+
+body.dark .busqueda-box input[type="text"] {
+    color: var(--text-color);
+}
+
+body.dark .busqueda-box input[type="text"]::placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+body.dark .busqueda-box .separador {
+    background-color: var(--primary-color-light);
+}
+
+body.dark .btn-buscar {
+    background-color: var(--primary-color);
+    color: var(--text-color); /* El texto debe contrastar con el primary-color del modo dark */
+}
+
+body.dark .btn-buscar:hover {
+    background-color: #4cae9b; /* Ajustar al primary-color del modo dark */
+}
+
+body.dark .acciones-box a {
+    color: var(--text-color);
+}
+
+body.dark .acciones-box a:hover {
+    background-color: var(--primary-color-light);
+}
+
+body.dark .acciones-box .icono:hover {
+    background-color: var(--primary-color-light);
+}
+
+body.dark .menu-usuario {
+    border-color: var(--primary-color-light);
+}
+
+body.dark .detalles,
+body.dark .anfitrion,
+body.dark .habitaciones {
+    border-bottom-color: var(--primary-color-light);
+}
+
+body.dark .hab-card {
+    border-color: var(--primary-color-light);
+    background-color: var(--sidebar-color);
+}
+
+body.dark .panoramas-box, body.dark .fauna-box {
+    background-color: var(--primary-color-light);
+}
+
+body.dark .panoramas-box h2, body.dark .fauna-box h2 {
+    color: var(--primary-color);
+}
+
+body.dark .reservar {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+body.dark .reservar:hover {
+    background-color: #4cae9b;
+}
+
+/* === INICIO: ESTILOS GUÍA DE AVENTURA para caca.html === */
+
+.contenedor-airbnb {
+    background-color: var(--adventure-bg);
+    color: var(--adventure-text);
+    font-family: var(--adventure-body-font);
+    padding-bottom: 50px; /* Más espacio al final */
+}
+
+.contenedor-airbnb h1,
+.contenedor-airbnb h2,
+.contenedor-airbnb h3,
+.contenedor-airbnb h4 {
+    font-family: var(--adventure-heading-font);
+    color: var(--adventure-primary); /* Títulos con el color primario de aventura */
+}
+
+.contenedor-airbnb .barra-superior {
+    background-color: var(--adventure-secondary); /* Fondo de cuero/terracota */
+    border-bottom: 2px solid var(--adventure-border); /* Borde más robusto */
+    padding: 10px 0;
+    color: var(--adventure-bg); /* Texto claro sobre fondo oscuro */
+}
+
+.contenedor-airbnb .logo-box .logo-airbnb {
+    /* Sugerencia: Reemplazar este logo. Por ahora lo ocultamos o reducimos */
+    /* display: none; */ 
+    filter: brightness(0) invert(1); /* Temporalmente para que sea blanco si es oscuro */
+    opacity: 0.8;
+}
+
+.contenedor-airbnb .busqueda-box {
+    border: 1px solid var(--adventure-border);
+    background-color: var(--adventure-bg);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); /* Sombra interior para profundidad */
+}
+
+.contenedor-airbnb .busqueda-box input[type="text"] {
+    color: var(--adventure-text);
+    font-family: var(--adventure-body-font);
+}
+
+.contenedor-airbnb .busqueda-box input[type="text"]::placeholder {
+    color: var(--adventure-text);
+    opacity: 0.6;
+}
+
+.contenedor-airbnb .busqueda-box .separador {
+    background-color: var(--adventure-border);
+}
+
+.contenedor-airbnb .btn-buscar {
+    background-color: var(--adventure-primary);
+    color: var(--adventure-bg);
+    width: 40px; 
+    height: 40px;
+}
+
+.contenedor-airbnb .btn-buscar:hover {
+    background-color: var(--adventure-text);
+}
+
+.contenedor-airbnb .acciones-box a {
+    color: var(--adventure-bg);
+    font-family: var(--adventure-body-font);
+    border: 1px solid transparent;
+    padding: 6px 15px;
+}
+
+.contenedor-airbnb .acciones-box a:hover {
+    background-color: transparent;
+    border-color: var(--adventure-bg);
+    color: var(--adventure-bg);
+}
+
+.contenedor-airbnb .acciones-box .icono {
+    color: var(--adventure-bg);
+    opacity: 0.8;
+}
+
+.contenedor-airbnb .acciones-box .icono:hover {
+    opacity: 1;
+    background-color: rgba(255,255,255,0.1);
+}
+
+.contenedor-airbnb .menu-usuario {
+    border: 1px solid var(--adventure-border);
+    background-color: var(--adventure-bg);
+    color: var(--adventure-text);
+}
+
+.contenedor-airbnb .menu-usuario:hover {
+    box-shadow: 0 0 5px var(--adventure-border);
+}
+
+.contenedor-airbnb .menu-usuario .icono-perfil {
+    color: var(--adventure-primary);
+}
+
+/* Títulos principales y ubicación */
+.contenedor-airbnb h1 {
+    font-size: 36px; /* Más grande y aventurero */
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 0px var(--adventure-secondary); /* Sombra de texto sutil */
+}
+
+.contenedor-airbnb .ubicacion {
+    text-align: center;
+    font-size: 18px;
+    font-family: var(--adventure-body-font);
+    color: var(--adventure-secondary); /* Color secundario para la ubicación */
+    margin-bottom: 30px;
+}
+
+/* Galería de Imágenes - Estilo Postales Antiguas */
+.contenedor-airbnb .galeria {
+    gap: 20px; /* Más espacio entre imágenes */
+    margin-bottom: 40px;
+}
+
+.contenedor-airbnb .galeria img {
+    border: 8px solid var(--adventure-bg); /* Borde grueso color pergamino */
+    outline: 1px solid var(--adventure-border); /* Línea exterior más oscura */
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.2); /* Sombra para efecto 3D */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contenedor-airbnb .galeria img:hover {
+    transform: scale(1.03) rotate(1deg); /* Ligero zoom y rotación al pasar el ratón */
+    box-shadow: 5px 5px 12px rgba(0,0,0,0.3);
+}
+
+/* Secciones de Contenido - Estilo Diario de Explorador */
+.contenedor-airbnb .detalles,
+.contenedor-airbnb .anfitrion,
+.contenedor-airbnb .habitaciones {
+    border: none; /* Quitamos el borde inferior anterior */
+    padding: 25px;
+    margin-bottom: 30px;
+    background-color: rgba(255,255,255, 0.1); /* Un fondo muy sutil si el principal es oscuro */
+    border: 1px dashed var(--adventure-border); /* Borde discontinuo */
+    box-shadow: 0 0 0 3px var(--adventure-bg), 0 0 0 4px var(--adventure-border); /* Doble borde para efecto papel */
+}
+
+/* Detalles (Huéspedes, Reseñas) */
+.contenedor-airbnb .detalles p {
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+/* Anfitrión - "Tu Guía Experto" */
+.contenedor-airbnb .anfitrion-box .avatar {
+    border: 3px solid var(--adventure-secondary);
+    padding: 3px;
+    background-color: var(--adventure-bg);
+}
+
+.contenedor-airbnb .anfitrion-box p strong {
+    font-family: var(--adventure-heading-font);
+    color: var(--adventure-primary);
+}
+
+.contenedor-airbnb .info-extra p {
+    font-style: italic;
+    opacity: 0.9;
+}
+
+.contenedor-airbnb .descripcion {
+    padding: 20px;
+    border-left: 3px solid var(--adventure-primary);
+    background-color: rgba(0,0,0,0.02);
+    margin-top: 25px;
+}
+
+/* Habitaciones - "Campamento Base" */
+.contenedor-airbnb .habitaciones h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+}
+
+.contenedor-airbnb .habitaciones-box {
+    gap: 25px;
+}
+
+.contenedor-airbnb .hab-card {
+    background-color: var(--adventure-bg);
+    border: 1px solid var(--adventure-border);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    min-width: 220px;
+}
+
+.contenedor-airbnb .hab-card p strong {
+    font-family: var(--adventure-heading-font);
+    color: var(--adventure-primary);
+    font-size: 18px;
+}
+
+/* Panoramas ("Misiones") y Fauna ("Bestiario") */
+.contenedor-airbnb .panoramas-box,
+.contenedor-airbnb .fauna-box {
+    background-color: var(--adventure-secondary); /* Fondo de cuero/terracota */
+    color: var(--adventure-bg); /* Texto claro */
+    padding: 30px;
+    border: 3px solid var(--adventure-border);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3), 3px 3px 10px rgba(0,0,0,0.2);
+}
+
+.contenedor-airbnb .panoramas-box h2,
+.contenedor-airbnb .fauna-box h2 {
+    color: var(--adventure-bg); /* Títulos claros sobre fondo oscuro */
+    text-align: center;
+    font-size: 28px;
+    text-shadow: 1px 1px 0px var(--adventure-text); /* Sombra oscura */
+}
+
+.contenedor-airbnb .panoramas-box ul,
+.contenedor-airbnb .fauna-box ul {
+    list-style-type: none; /* Quitar viñetas por defecto, podríamos añadir iconos */
+    padding-left: 0;
+}
+
+.contenedor-airbnb .panoramas-box li,
+.contenedor-airbnb .fauna-box li {
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(245, 239, 230, 0.5); /* Separador sutil */
+}
+
+.contenedor-airbnb .panoramas-box li:last-child,
+.contenedor-airbnb .fauna-box li:last-child {
+    border-bottom: none;
+}
+
+.contenedor-airbnb .fauna-box .info-fuente {
+    color: var(--adventure-bg);
+    opacity: 0.7;
+}
+
+/* Estilos para imágenes en Panoramas y Fauna */
+.img-panorama,
+.img-fauna {
+    width: 100px; /* Ancho fijo */
+    height: 100px; /* Alto fijo */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+    border-radius: 8px; /* Bordes redondeados */
+    margin-right: 10px; /* Espacio a la derecha de la imagen */
+    border: 1px solid var(--adventure-border); /* Un borde sutil */
+    vertical-align: middle; /* Alinea la imagen con el texto adyacente */
+}
+
+/* Botones de Aventura */
+.contenedor-airbnb .reservar {
+    background-color: var(--adventure-primary);
+    color: var(--adventure-bg);
+    font-family: var(--adventure-heading-font);
+    font-size: 18px;
+    padding: 15px 30px;
+    border: 2px solid var(--adventure-text); /* Borde oscuro */
+    box-shadow: 2px 2px 0px var(--adventure-text); /* Efecto botón 2D */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.15s ease;
+}
+
+.contenedor-airbnb .reservar:hover {
+    background-color: var(--adventure-text); /* Invertir colores al pasar el ratón */
+    color: var(--adventure-bg);
+    border-color: var(--adventure-primary);
+    box-shadow: 1px 1px 0px var(--adventure-primary);
+    transform: translate(1px, 1px);
+}
+
+.contenedor-airbnb .reservar:active {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+
+/* Estilos para el Mapa Interactivo Temporal */
+.contenedor-airbnb .mapa-explorador-seccion {
+    background-color: var(--adventure-secondary); /* Fondo terracota, como las cajas de panorama */
+    color: var(--adventure-bg);
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 3px solid var(--adventure-border);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3), 3px 3px 10px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.contenedor-airbnb .mapa-explorador-seccion h2 {
+    color: var(--adventure-bg);
+    text-shadow: 1px 1px 0px var(--adventure-text);
+    margin-bottom: 20px;
+}
+
+.contenedor-airbnb .mapa-placeholder {
+    width: 100%;
+    max-width: 700px; /* Ancho máximo del mapa */
+    margin: 0 auto;
+    background-color: var(--adventure-bg); /* Fondo claro para el mapa en sí */
+    border: 2px dashed var(--adventure-border);
+    padding: 20px;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.contenedor-airbnb .mapa-placeholder img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--adventure-border);
+}
+
+.contenedor-airbnb .aviso-mapa {
+    margin-top: 15px;
+    font-family: var(--adventure-body-font);
+    font-style: italic;
+    color: var(--adventure-text);
+    font-size: 15px;
+}
+
+/* Estilos para el Panel Lateral de Aventura (Ahora condicionado por .pagina-con-panel) */
+.pagina-con-panel .panel-lateral-aventura {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 280px; /* Ancho del panel */
+    height: 100vh; /* Alto completo */
+    background-color: var(--adventure-secondary); /* Mismo color que la barra superior y cajas */
+    color: var(--adventure-bg);
+    border-left: 3px solid var(--adventure-border);
+    box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    padding: 20px;
+    overflow-y: auto; /* Scroll si el contenido es mucho */
+    z-index: 200; /* Para que esté sobre otros elementos si es necesario */
+    font-family: var(--adventure-body-font);
+}
+
+.pagina-con-panel .panel-lateral-aventura .panel-seccion {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed var(--adventure-border); 
+    border-radius: 4px;
+}
+
+.pagina-con-panel .panel-lateral-aventura .panel-seccion:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.pagina-con-panel .panel-lateral-aventura h4 {
+    font-family: var(--adventure-heading-font);
+    color: var(--adventure-bg);
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 0px var(--adventure-text);
+}
+
+.pagina-con-panel .panel-lateral-aventura h4 i {
+    margin-right: 8px;
+    opacity: 0.8;
+}
+
+.pagina-con-panel .panel-lateral-aventura .dato-dinamico {
+    font-size: 20px;
+    font-weight: bold;
+    color: #FFF; /* Destacar un poco más el dato */
+    margin-bottom: 5px;
+}
+
+.pagina-con-panel .panel-lateral-aventura .detalle-clima {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.pagina-con-panel .panel-lateral-aventura .calendario-placeholder p {
+    font-size: 14px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.pagina-con-panel .panel-lateral-aventura .calendario-placeholder p strong {
+    color: #FFF;
+}
+
+.pagina-con-panel .panel-lateral-aventura .anuncio-gremio {
+    font-size: 15px;
+    font-style: italic;
+    line-height: 1.6;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+
+/* === FIN: ESTILOS GUÍA DE AVENTURA para caca.html === */
+
+/* === ESTILOS PARA LA PÁGINA DE SELECCIÓN DE DESTINOS (explorar.html) === */
+
+.contenedor-explorar {
+    font-family: var(--adventure-body-font);
+    background-color: var(--adventure-bg); /* Fondo de pergamino */
+    color: var(--adventure-text);
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.explorar-header {
+    text-align: center;
+    margin-bottom: 40px;
+    max-width: 800px;
+}
+
+.explorar-header h1 {
+    font-family: var(--adventure-heading-font);
+    color: var(--adventure-primary);
+    font-size: 38px;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 0px var(--adventure-secondary);
+}
+
+.explorar-header p {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--adventure-text);
+    opacity: 0.9;
+}
+
+.opciones-destino {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px; /* Ancho máximo para las tarjetas */
+    margin-bottom: 40px;
+}
+
+.tarjeta-destino {
+    display: block; /* Para que el enlace ocupe toda la tarjeta */
+    text-decoration: none;
+    color: inherit; /* Hereda el color de texto normal */
+    background-color: var(--adventure-secondary); /* Fondo de cuero/terracota */
+    border-radius: 10px;
+    overflow: hidden; /* Para que la imagen no se salga de los bordes redondeados */
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid var(--adventure-border);
+}
+
+.tarjeta-destino:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 8px 12px 20px rgba(0,0,0,0.3);
+}
+
+.tarjeta-destino img {
+    width: 100%;
+    height: 220px; /* Altura fija para la imagen de la tarjeta */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+    border-bottom: 2px solid var(--adventure-border);
+}
+
+.info-tarjeta-destino {
+    padding: 20px;
+    color: var(--adventure-bg); /* Texto claro sobre fondo de tarjeta */
+}
+
+.info-tarjeta-destino h2 {
+    font-family: var(--adventure-heading-font);
+    color: var(--adventure-bg); /* Título claro */
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 0px var(--adventure-text);
+}
+
+.info-tarjeta-destino .descripcion-breve {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    min-height: 70px; /* Para alinear un poco la altura del texto entre tarjetas */
+}
+
+.info-tarjeta-destino .tipo-experiencia {
+    display: block;
+    font-size: 13px;
+    font-style: italic;
+    opacity: 0.8;
+    border-top: 1px dashed rgba(245, 239, 230, 0.5);
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.explorar-footer {
+    text-align: center;
+    margin-top: auto; /* Empuja el footer hacia abajo */
+    padding-top: 20px;
+    border-top: 1px solid var(--adventure-border);
+    width: 100%;
+    max-width: 800px;
+    font-size: 14px;
+    color: var(--adventure-text);
+    opacity: 0.8;
+}
+
+/* === FIN ESTILOS PARA explorar.html === */
+
+/* === ESTILOS PARA LA PÁGINA DE INICIO (index.html) === */
+
+body.pagina-index {
+    /* El body general ya tiene el fondo --adventure-bg y la fuente --adventure-body-font */
+    /* No necesita padding-right como pagina-con-panel */
+}
+
+.index-hero-banner {
+    position: relative;
+    min-height: 80vh; /* Altura considerable para el hero */
+    background-image: url('placeholder_hero_background.jpg'); /* Necesitarás esta imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    /* color: var(--adventure-bg); // Cambiado abajo en .hero-content */
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(245, 245, 245, 0.75); /* Superposición GRIS MUY CLARO semitransparente */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    color: var(--adventure-text); /* Texto OSCURO para contraste con overlay claro */
+}
+
+.logo-index-hero {
+    max-width: 180px; /* Ajusta según tu logo */
+    margin-bottom: 20px;
+    border: 3px solid var(--adventure-bg);
+    border-radius: 50%;
+    padding: 5px;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.index-hero-banner h1 {
+    font-family: var(--adventure-heading-font);
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+}
+
+.subtitulo-hero {
+    font-family: var(--adventure-heading-font);
+    font-size: 24px;
+    font-style: italic;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    color: var(--adventure-text);
+}
+
+.descripcion-hero {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-aventura-index {
+    display: inline-block;
+    background-color: var(--adventure-primary);
+    color: var(--adventure-bg); /* Texto claro para el botón */
+    font-family: var(--adventure-heading-font);
+    font-size: 22px;
+    padding: 18px 40px;
+    border: 2px solid var(--adventure-bg);
+    box-shadow: 3px 3px 0px var(--adventure-secondary); 
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-aventura-index:hover {
+    background-color: var(--adventure-secondary);
+    color: var(--adventure-bg);
+    border-color: var(--adventure-primary);
+    box-shadow: 2px 2px 0px var(--adventure-primary);
+    transform: translate(1px, 1px) scale(1.02);
+}
+
+.otros-enlaces-index {
+    margin-top: 30px;
+}
+
+.otros-enlaces-index a {
+    /* color: var(--adventure-bg); // Cambiado a texto principal */
+    color: var(--adventure-text);
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 16px;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.otros-enlaces-index a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.otros-enlaces-index span {
+    /* opacity: 0.5; // Usar color de texto principal con opacidad */
+    color: var(--adventure-text);
+    opacity: 0.6;
+}
+
+.index-seccion-info {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: var(--adventure-bg); /* Fondo principal */
+    color: var(--adventure-text);
+}
+
+.index-seccion-info h2 {
+    font-family: var(--adventure-heading-font);
+    color: var(--adventure-primary);
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.columnas-info {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.columna {
+    flex-basis: calc(33.333% - 30px); /* Tres columnas con espacio */
+    min-width: 280px; /* Para que se apilen en pantallas pequeñas */
+    background-color: var(--adventure-secondary); /* Fondo de tarjeta */
+    color: var(--adventure-bg);
+    padding: 25px;
+    border-radius: 8px;
+    border: 2px solid var(--adventure-border);
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.15);
+}
+
+.columna img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border: 2px solid var(--adventure-border);
+}
+
+.columna h3 {
+    font-family: var(--adventure-heading-font);
+    color: var(--adventure-bg);
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.columna p {
+    font-size: 15px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.index-footer {
+    text-align: center;
+    padding: 30px 20px;
+    background-color: var(--adventure-text); /* Fondo oscuro para footer */
+    color: var(--adventure-bg);
+    font-size: 14px;
+}
+
+.index-footer a {
+    color: var(--adventure-secondary);
+    text-decoration: none;
+}
+
+.index-footer a:hover {
+    text-decoration: underline;
+}
+
+/* === FIN ESTILOS PARA index.html === */
+
+/* Estilo para el botón de Cambiar Viaje */
+.contenedor-airbnb .btn-cambiar-viaje {
+    display: block; /* Para que ocupe su propia línea y centrar el texto */
+    width: fit-content; /* Ajustar al contenido */
+    margin: 30px auto 20px auto; /* Margen superior, inferior y centrado horizontal */
+    background-color: var(--adventure-secondary); /* Color secundario, como las cajas */
+    color: var(--adventure-bg);
+    font-family: var(--adventure-heading-font);
+    font-size: 17px;
+    padding: 12px 25px;
+    border: 2px solid var(--adventure-border);
+    box-shadow: 2px 2px 0px var(--adventure-border);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none; /* Quitar subrayado de enlace */
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.15s ease;
+}
+
+.contenedor-airbnb .btn-cambiar-viaje:hover {
+    background-color: var(--adventure-border);
+    color: var(--adventure-bg);
+    border-color: var(--adventure-text);
+    box-shadow: 1px 1px 0px var(--adventure-text);
+    transform: translate(1px, 1px);
+}
+
+.contenedor-airbnb .btn-cambiar-viaje:active {
+    box-shadow: none;
+    transform: translate(2px, 2px);
+}
+.modal-reserva {
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-contenido {
+    background: #fff;
+    padding: 2em;
+    border-radius: 10px;
+    min-width: 300px;
+    position: relative;
+    text-align: center;
+  }
+  .cerrar-modal {
+    position: absolute;
+    right: 1em; top: 1em;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  .sugerencias-airbnb {
+    position: absolute;
+    top: 100%; /* Justo debajo de la barra */
+    left: 0;
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(60,60,60,0.18);
+    z-index: 100;
+    margin-top: 10px;
+    padding: 0 0 8px 0;
+    display: none; /* Se muestra solo cuando hay sugerencias */
+  }
+  
+  .sugerencias-airbnb.mostrar {
+    display: block;
+  }
+  
+  .sugerencias-titulo {
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 20px 32px 8px 32px;
+    color: #444;
+  }
+  
+  .sugerencia-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 32px;
+    cursor: pointer;
+    border-radius: 18px;
+    transition: background 0.18s;
+  }
+  .sugerencia-item:hover {
+    background: #f3f7fa;
+  }
+  
+  .sugerencia-icono-circulo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    background: #f3f7fa;
+  }
+  .sugerencia-textos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .sugerencia-nombre {
+    font-weight: 700;
+    color: #222;
+    font-size: 1.18em;
+    margin-bottom: 2px;
+  }
+  .sugerencia-desc {
+    font-size: 1em;
+    color: #888;
+    margin-top: 0;
+  }
+  .sugerencia-no-encontrado {
+    text-align: center;
+    color: #b32d2d;
+    font-weight: 600;
+    font-size: 1.1em;
+    padding: 24px 0 18px 0;
+  }
+
+  .modal-fechas {
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-fechas-contenido {
+    background: #fff;
+    padding: 2em;
+    border-radius: 18px;
+    min-width: 320px;
+    position: relative;
+    text-align: center;
+  }
+  .cerrar-modal {
+    position: absolute;
+    right: 1em; top: 1em;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+
+/* Estilos para el panel de perfil de usuario */
+.acciones-box {
+  position: relative; /* Para posicionar el panel-perfil correctamente */
+}
+
+.menu-usuario {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.menu-usuario:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.panel-perfil {
+  position: absolute;
+  top: 100%; /* Se mostrará debajo del botón */
+  right: 0;
+  background-color: var(--sidebar-color, #FFFFFF); /* Usa el color del sidebar o blanco */
+  color: var(--text-color, #0A2540);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  width: 280px; /* Ancho del panel */
+  z-index: 110; /* Encima de otros elementos */
+  margin-top: 8px;
+  padding: 15px;
+  border: 1px solid var(--adventure-border, #DDD);
+}
+
+.panel-perfil h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: var(--adventure-primary, #5D6D57);
+  font-family: var(--adventure-heading-font);
+}
+
+.panel-perfil p {
+  font-size: 0.95em;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.panel-perfil .datos-usuario p {
+    margin-bottom: 5px;
+}
+.panel-perfil .datos-usuario strong {
+    color: var(--adventure-text);
+}
+
+.panel-perfil #link-login-perfil {
+  display: block;
+  margin-top: 15px;
+  padding: 10px;
+  background-color: var(--adventure-primary, #5D6D57);
+  color: var(--adventure-bg, #F5EFE6);
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.panel-perfil #link-login-perfil:hover {
+  background-color: var(--adventure-secondary, #A87C56);
+}
+
+body.dark .panel-perfil {
+    background-color: var(--sidebar-color);
+    color: var(--text-color);
+    border: 1px solid var(--toggle-color);
+}
+
+body.dark .panel-perfil #link-login-perfil {
+    background-color: var(--primary-color);
+    color: var(--sidebar-color);
+}
+body.dark .panel-perfil #link-login-perfil:hover {
+    background-color: var(--primary-color-light);
+    color: var(--text-color);
+}
